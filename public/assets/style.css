@@ -1,0 +1,66 @@
+body {
+  background-color: #000;
+  color: #fff;
+}
+
+.btn-gold {
+  background-color: #D4AF37;
+  color: #000;
+  border: none;
+}
+.btn-gold:hover {
+  background-color: #c9a233;
+  color: #000;
+}
+
+.card {
+  background-color: #111;
+  border: 1px solid #333;
+  color: #fff;
+}
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -1;
+  background: url('../assets/bg-fixed.jpg') no-repeat center center/cover;
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+/* Fade-in animation for sections */
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
+  will-change: opacity, transform;
+}
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.section-divider {
+  width: 50%;
+  margin: 2.5rem auto 2.5rem auto;
+  border: 0;
+  border-top: 1.5px solid rgba(255,255,255,0.5);
+  opacity: 1;
+}
+
+/* Full white line for footer */
+.footer-main hr {
+  border-top: 2px solid #fff;
+  opacity: 0.25;
+  width: 100%;
+}
+
+.footer-main .footer-link {
+  color: #fff !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+}
+.footer-main .footer-link:hover {
+  color: #D4AF37 !important;
+  text-decoration: underline !important;
+}
