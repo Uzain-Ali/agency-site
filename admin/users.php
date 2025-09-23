@@ -6,7 +6,7 @@ if (isset($_SESSION['all_permissions']) && $_SESSION['all_permissions'] === true
     // Admin: skip permission check
 } else {
     $userPerms = getUserPermissions($_SESSION['user_id'], $conn);
-    if (!in_array('blogs', $userPerms)) {
+    if (!in_array('users', $userPerms)) {
         die("Access denied.");
     }
 }
@@ -39,7 +39,7 @@ $result = $conn->query("SELECT * FROM users ORDER BY created_at DESC");
       <?php include 'sidebar.php'; ?>
       <main class="col-lg-10 col-md-9 ms-sm-auto px-4 py-4 main-content">
         <h1 class="mb-4">Users Management</h1>
-        <a href="user_add.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add User</a>
+        <a href="../actions/user_form.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add User</a>
         <div class="table-responsive">
           <table class="table table-dark table-striped align-middle">
             <thead>
@@ -61,8 +61,8 @@ $result = $conn->query("SELECT * FROM users ORDER BY created_at DESC");
                 <td><?= $row['role'] ?></td>
                 <td><?= $row['created_at'] ?></td>
                 <td>
-                  <a href="user_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
-                  <a href="user_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this user?')"><i class="bi bi-trash"></i></a>
+                  <a href="../actions/user_form.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                  <a href="../actions/user_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this user?')"><i class="bi bi-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>

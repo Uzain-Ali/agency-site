@@ -1,29 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const content = document.getElementById("content");
-
   document.querySelectorAll("[data-link]").forEach(link => {
-    link.addEventListener("click", (e) => {
+    link.addEventListener("click", async (e) => {
       e.preventDefault();
-      const page = e.target.getAttribute("data-link");
-
-      fetch(page)
-        .then(res => res.text())
-        .then(html => {
-          content.innerHTML = html;
-          window.history.pushState({}, "", page);
-        })
-        .catch(() => {
-          content.innerHTML = "<div class='alert alert-danger'>Page failed to load</div>";
-        });
+      const url = link.getAttribute("href") || link.getAttribute("data-link");
+      const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+      const html = await response.text();
+      document.body.innerHTML = html;
+      window.history.pushState({}, "", url);
+      // Re-attach event listeners after replacing body
+      window.scrollTo(0, 0);
+      setTimeout(attachAjaxLinks, 100);
     });
   });
 
   // Handle back/forward navigation
   window.addEventListener("popstate", () => {
-    fetch(window.location.pathname.split("/").pop())
+    const url = window.location.pathname.split("/").pop();
+    fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
       .then(res => res.text())
-      .then(html => { content.innerHTML = html; });
+      .then(html => {
+        document.body.innerHTML = html;
+        setTimeout(attachAjaxLinks, 100);
+      });
   });
+
+  function attachAjaxLinks() {
+    document.querySelectorAll("[data-link]").forEach(link => {
+      link.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const url = link.getAttribute("href") || link.getAttribute("data-link");
+        const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
+        const html = await response.text();
+        document.body.innerHTML = html;
+        window.history.pushState({}, "", url);
+        window.scrollTo(0, 0);
+        setTimeout(attachAjaxLinks, 100);
+      });
+    });
+  }
 });
 
 // Fade-in on scroll for sections
@@ -40,3 +54,4 @@ document.addEventListener("DOMContentLoaded", () => {
   onScroll();
   window.addEventListener('scroll', onScroll);
 });
+

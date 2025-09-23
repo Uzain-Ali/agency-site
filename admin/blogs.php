@@ -39,7 +39,7 @@ $result = $conn->query("SELECT * FROM blogs ORDER BY created_at DESC");
       <?php include 'sidebar.php'; ?>
       <main class="col-lg-10 col-md-9 ms-sm-auto px-4 py-4 main-content">
         <h1 class="mb-4">Blogs Management</h1>
-        <a href="blog_add.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Blog</a>
+        <a href="../actions/blog_form.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Blog</a>
         <div class="table-responsive">
           <table class="table table-dark table-striped align-middle">
             <thead>
@@ -59,8 +59,8 @@ $result = $conn->query("SELECT * FROM blogs ORDER BY created_at DESC");
                 <td><?= htmlspecialchars($row['slug']) ?></td>
                 <td><?= $row['created_at'] ?></td>
                 <td>
-                  <a href="blog_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
-                  <a href="blog_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this blog?')"><i class="bi bi-trash"></i></a>
+                  <a href="../actions/blog_form.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                  <a href="../actions/blog_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this blog?')"><i class="bi bi-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>

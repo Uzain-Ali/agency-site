@@ -39,7 +39,7 @@ $result = $conn->query("SELECT * FROM testimonials ORDER BY created_at DESC");
       <?php include 'sidebar.php'; ?>
       <main class="col-lg-10 col-md-9 ms-sm-auto px-4 py-4 main-content">
         <h1 class="mb-4">Testimonials Management</h1>
-        <a href="testimonial_add.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Testimonial</a>
+        <a href="../actions/testimonial_form.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Testimonial</a>
         <div class="table-responsive">
           <table class="table table-dark table-striped align-middle">
             <thead>
@@ -65,8 +65,8 @@ $result = $conn->query("SELECT * FROM testimonials ORDER BY created_at DESC");
                 </td>
                 <td><?= $row['created_at'] ?></td>
                 <td>
-                  <a href="testimonial_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
-                  <a href="testimonial_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this testimonial?')"><i class="bi bi-trash"></i></a>
+                  <a href="../actions/testimonial_form.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                  <a href="../actions/testimonial_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this testimonial?')"><i class="bi bi-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>

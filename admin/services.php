@@ -39,7 +39,7 @@ $result = $conn->query("SELECT * FROM services ORDER BY created_at DESC");
       <?php include 'sidebar.php'; ?>
       <main class="col-lg-10 col-md-9 ms-sm-auto px-4 py-4 main-content">
         <h1 class="mb-4">Services Management</h1>
-        <a href="service_add.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Service</a>
+        <a href="../actions/service_form.php" class="btn btn-success mb-3"><i class="bi bi-plus-circle"></i> Add Service</a>
         <div class="table-responsive">
           <table class="table table-dark table-striped align-middle">
             <thead>
@@ -71,8 +71,8 @@ $result = $conn->query("SELECT * FROM services ORDER BY created_at DESC");
                 </td>
                 <td><?= $row['created_at'] ?></td>
                 <td>
-                  <a href="service_edit.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
-                  <a href="service_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this service?')"><i class="bi bi-trash"></i></a>
+                  <a href="../actions/service_form.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></a>
+                  <a href="../actions/service_delete.php?id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this service?')"><i class="bi bi-trash"></i></a>
                 </td>
               </tr>
             <?php endwhile; ?>
