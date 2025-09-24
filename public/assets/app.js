@@ -5,11 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const url = link.getAttribute("href") || link.getAttribute("data-link");
       const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
       const html = await response.text();
-      document.body.innerHTML = html;
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const newContent = doc.getElementById("content");
+      if (newContent) {
+        document.getElementById("content").innerHTML = newContent.innerHTML;
+        window.scrollTo(0, 0);
+        afterAsyncNavigation(url);
+      }
       window.history.pushState({}, "", url);
-      // Re-attach event listeners after replacing body
       window.scrollTo(0, 0);
       setTimeout(attachAjaxLinks, 100);
+
+      // Re-initialize blog infinite scroll if on blogs page
+      if (window._blogScrollCleanup) window._blogScrollCleanup();
+      if (url.includes('blogs.php')) {
+        loadScript('assets/blogs.js', function() {
+          if (typeof initBlogInfiniteScroll === "function") {
+            initBlogInfiniteScroll();
+          }
+        });
+      }
     });
   });
 
@@ -19,7 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } })
       .then(res => res.text())
       .then(html => {
-        document.body.innerHTML = html;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const newContent = doc.getElementById("content");
+        if (newContent) {
+          document.getElementById("content").innerHTML = newContent.innerHTML;
+          window.scrollTo(0, 0);
+          afterAsyncNavigation(url);
+        }
         setTimeout(attachAjaxLinks, 100);
       });
   });
@@ -31,17 +54,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const url = link.getAttribute("href") || link.getAttribute("data-link");
         const response = await fetch(url, { headers: { "X-Requested-With": "XMLHttpRequest" } });
         const html = await response.text();
-        document.body.innerHTML = html;
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const newContent = doc.getElementById("content");
+        if (newContent) {
+          document.getElementById("content").innerHTML = newContent.innerHTML;
+          window.scrollTo(0, 0);
+          afterAsyncNavigation(url);
+        }
         window.history.pushState({}, "", url);
         window.scrollTo(0, 0);
         setTimeout(attachAjaxLinks, 100);
+
+        // Re-initialize blog infinite scroll if on blogs page
+        if (url.includes('blogs.php') && typeof initBlogInfiniteScroll === "function") {
+          initBlogInfiniteScroll();
+        }
       });
     });
   }
-});
 
-// Fade-in on scroll for sections
-document.addEventListener("DOMContentLoaded", () => {
+
+
+  // On initial load
+  initFadeInSections();
+});
+function initFadeInSections() {
   const fadeEls = document.querySelectorAll('.fade-in-section');
   const onScroll = () => {
     fadeEls.forEach(el => {
@@ -53,5 +91,32 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   onScroll();
   window.addEventListener('scroll', onScroll);
-});
+  window._fadeScrollCleanup = function() {
+    window.removeEventListener('scroll', onScroll);
+  };
+}
+// After async navigation, call this:
+function afterAsyncNavigation(url) {
+  // Clean up old listeners
+  if (window._fadeScrollCleanup) window._fadeScrollCleanup();
+  initFadeInSections();
 
+  // Blog infinite scroll
+  if (window._blogScrollCleanup) window._blogScrollCleanup();
+  if (url.includes('blogs.php')) {
+    loadScript('assets/blogs.js', function() {
+      if (typeof initBlogInfiniteScroll === "function") {
+        initBlogInfiniteScroll();
+      }
+    });
+  }
+}
+
+
+
+function loadScript(src, callback) {
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = callback || function(){};
+  document.head.appendChild(script);
+}

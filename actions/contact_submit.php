@@ -1,5 +1,5 @@
 <?php
-include("../config/config.php");
+include("../config.php");
 require '../vendor/autoload.php'; // if you install PHPMailer via Composer
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -16,15 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail = new PHPMailer(true);
     try {
         $mail->isSMTP();
-        $mail->Host       = 'smtp.yourhost.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'info@yourdomain.com';
-        $mail->Password   = 'yourpassword';
+        $mail->Host = 'smtp.gmail.com'; // For Gmail
+        $mail->SMTPAuth = true;
+        $mail->Username = 'muzainalisiddiqui@gmail.com'; // Your email
+        $mail->Password = 'umfg nnip rnxm fhgb'; // Gmail app password
         $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
+        $mail->Port = 587;
 
-        $mail->setFrom('info@yourdomain.com', 'Agency Website');
-        $mail->addAddress('admin@yourdomain.com');
+        // Sender & recipient
+        $mail->setFrom('muzainalisiddiqui@gmail.com', 'Agency Website');
+        $mail->addAddress('muzainalisiddiqui@gmail.com'); // Where you want to receive messages
 
         $mail->isHTML(true);
         $mail->Subject = "New Contact Form Submission";

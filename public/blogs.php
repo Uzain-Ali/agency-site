@@ -1,6 +1,6 @@
 <?php
 // filepath: c:\xampp\htdocs\agency-site\public\blogs.php
-include("../config/config.php");
+include("../config.php");
 
 // Fetch all blogs
 $blogs = $conn->query("SELECT * FROM blogs ORDER BY created_at DESC");
@@ -24,7 +24,7 @@ $categories = [
   <title>Agency Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
   <link href="assets/style.css" rel="stylesheet">
   <style>
     body {
@@ -42,8 +42,7 @@ $categories = [
       opacity: 0.5;
       pointer-events: none;
     }
-
-    .blog-card {
+        .blog-card {
       background: #222;
       border-radius: 1rem;
       box-shadow: 0 2px 16px rgba(0,0,0,0.2);
@@ -113,6 +112,7 @@ $categories = [
       .blog-card img { height: 160px; }
       .blog-overlay { padding-top: 70px; }
     }
+
   </style>
 </head>
 <body>
@@ -124,83 +124,56 @@ $categories = [
   <!-- Navbar -->
   <?php include("navbar.php"); ?>
   <div style="height:140px;"></div>
-
-  <div class="blog-overlay">
-    <div class="container">
-      <div class="row">
-        <!-- Blog Posts -->
-        <div class="col-lg-8">
-        <div id="blog-list"></div>
-        <div id="blog-loader" class="text-center my-3" style="display:none;">
-            <div class="spinner-border text-warning"></div>
-        </div>
-        </div>
-        <!-- Sidebar Widgets -->
-        <div class="col-lg-4">
-          <!-- Recent Posts Widget -->
-          <div class="widget">
-            <div class="widget-title"><i class="bi bi-clock-history"></i> Recent Posts</div>
-            <ul class="widget-list">
-              <?php while($r = $recent->fetch_assoc()): ?>
-                <li>
-                  <a href="blog-detail.php?id=<?= $r['id'] ?>">
-                    <i class="bi bi-chevron-right"></i> <?= htmlspecialchars($r['title']) ?>
-                  </a>
-                </li>
-              <?php endwhile; ?>
-            </ul>
+  <div id="content">
+    <div class="blog-overlay">
+      <div class="container">
+        <div class="row">
+          <!-- Blog Posts -->
+          <div class="col-lg-8">
+          <div id="blog-list"></div>
+          <div id="blog-loader" class="text-center my-3" style="display:none;">
+              <div class="spinner-border text-warning"></div>
           </div>
-          <!-- Categories Widget -->
-          <div class="widget">
-            <div class="widget-title"><i class="bi bi-tags"></i> Categories</div>
-            <ul class="widget-list">
-              <?php foreach($categories as $cat): ?>
-                <li>
-                  <a href="#"><i class="bi bi-tag"></i> <?= htmlspecialchars($cat) ?></a>
-                </li>
-              <?php endforeach; ?>
-            </ul>
+          </div>
+          <!-- Sidebar Widgets -->
+          <div class="col-lg-4">
+            <!-- Recent Posts Widget -->
+            <div class="widget">
+              <div class="widget-title"><i class="bi bi-clock-history"></i> Recent Posts</div>
+              <ul class="widget-list">
+                <?php while($r = $recent->fetch_assoc()): ?>
+                  <li>
+                    <a href="blog-detail.php?id=<?= $r['id'] ?>">
+                      <i class="bi bi-chevron-right"></i> <?= htmlspecialchars($r['title']) ?>
+                    </a>
+                  </li>
+                <?php endwhile; ?>
+              </ul>
+            </div>
+            <!-- Categories Widget -->
+            <div class="widget">
+              <div class="widget-title"><i class="bi bi-tags"></i> Categories</div>
+              <ul class="widget-list">
+                <?php foreach($categories as $cat): ?>
+                  <li>
+                    <a href="#"><i class="bi bi-tag"></i> <?= htmlspecialchars($cat) ?></a>
+                  </li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
   <?php include("footer.php"); ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-
 <script>
-let offset = 0;
-const limit = 2;
-let loading = false;
-let allLoaded = false;
-
-function loadBlogs() {
-  if (loading || allLoaded) return;
-  loading = true;
-  document.getElementById('blog-loader').style.display = 'block';
-  fetch(`blogs_ajax.php?offset=${offset}`)
-    .then(res => res.text())
-    .then(html => {
-      if (html.trim() === "") {
-        allLoaded = true;
-      } else {
-        document.getElementById('blog-list').insertAdjacentHTML('beforeend', html);
-        offset += limit;
-      }
-      document.getElementById('blog-loader').style.display = 'none';
-      loading = false;
-    });
+if (window._blogScrollCleanup) window._blogScrollCleanup();
+if (typeof initBlogInfiniteScroll === "function") {
+  initBlogInfiniteScroll();
 }
-
-// Initial load
-document.addEventListener("DOMContentLoaded", () => {
-  loadBlogs();
-  window.addEventListener('scroll', () => {
-    if ((window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 200)) {
-      loadBlogs();
-    }
-  });
-});
 </script>
+</body>
 </html>

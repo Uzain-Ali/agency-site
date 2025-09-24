@@ -1,8 +1,5 @@
 <?php
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-include("../config/config.php");
+include("../config.php");
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 $stmt = $conn->prepare("SELECT * FROM blogs WHERE id=?");
@@ -57,7 +54,8 @@ $widgetStmt->close();
   </video>
   <?php include("navbar.php"); ?>
   <div style="height:140px;"></div>
-  <div class="blog-overlay">
+  <div id="content">
+    <div class="blog-overlay">
     <div class="container py-5 fade-in-section">
       <div class="row justify-content-center">
         <div class="col-lg-8">
@@ -102,7 +100,9 @@ $widgetStmt->close();
         </div>
       </div>
     </div>
+    </div>
   </div>
+
   <?php include("footer.php"); ?>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>

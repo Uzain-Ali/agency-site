@@ -1,5 +1,5 @@
 <?php
-include("../config/config.php");
+include("../config.php");
 
 $offset = isset($_GET['offset']) ? intval($_GET['offset']) : 0;
 $limit = 2;

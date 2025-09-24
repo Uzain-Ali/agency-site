@@ -64,3 +64,104 @@ body::before {
   color: #D4AF37 !important;
   text-decoration: underline !important;
 }
+
+
+/* Blog */
+    .blog-card {
+      background: #222;
+      border-radius: 1rem;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+      margin-bottom: 2rem;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 4px 24px rgba(212,175,55,0.15);
+    }
+    .blog-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-bottom: 1px solid #333;
+    }
+    .blog-card .card-body {
+      padding: 1.5rem;
+    }
+    .blog-card .card-title {
+      color: #D4AF37;
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+    .blog-card .card-text {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .blog-meta {
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+    .widget {
+      background: #181818;
+      border-radius: 0.7rem;
+      padding: 1.5rem 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    .widget-title {
+      color: #D4AF37;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+    .widget-list {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+    }
+    .widget-list li {
+      margin-bottom: 0.7rem;
+    }
+    .widget-list a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .widget-list a:hover {
+      color: #D4AF37;
+      text-decoration: underline;
+    }
+    @media (max-width: 991px) {
+      .blog-card img { height: 160px; }
+      .blog-overlay { padding-top: 70px; }
+    }
+
+
+/* Contact */
+    .contact-section { background: rgba(24,24,24,0.25); border-radius: 1rem; margin-bottom: 2.5rem; }
+    .contact-title { color: #D4AF37; }
+
+
+/* Services */
+    .section-fade { background: rgba(24,24,24,0.25); border-radius: 1rem; margin-bottom: 2.5rem; }
+    .service-icon { font-size: 2.5rem; color: #D4AF37; }
+    .service-card { background:rgba(24,24,24,0.45); color:#D4AF37; border-radius:1rem; }
+    .service-card .card-text { color: #fff; }
+    .plan-toggle .btn { min-width: 120px; }
+    .plan-card { background:rgba(24,24,24,0.45); color:#fff; border-radius:1rem; border:2px solid #D4AF37; }
+    .plan-card.premium { border-color: #fff; background:rgba(212,175,55,0.18); color:#181818; }
+    .plan-card .plan-title { color: #D4AF37; }
+    .plan-card.premium .plan-title { color: #fff; }
+
+/* About */
+    .curve-img-top {
+      width: 100%; border-bottom-left-radius: 80% 20%; border-bottom-right-radius: 80% 20%; object-fit: cover; max-height: 350px;
+    }
+    .curve-img-bottom {
+      width: 100%; border-top-left-radius: 80% 20%; border-top-right-radius: 80% 20%; object-fit: cover; max-height: 350px;
+    }
+    .about-section { background: rgba(24,24,24,0.25); border-radius: 1rem; margin-bottom: 2.5rem; }
+    .about-title { color: #D4AF37; }
+
